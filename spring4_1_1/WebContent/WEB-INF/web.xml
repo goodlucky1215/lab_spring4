@@ -2,13 +2,16 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- contextparam은 모든 파일들의 공통된 관심사 -> 즉 서버가 꺼질때까지 계속 유지된다. -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/log4j.properties </param-value>
+	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		/WEB-INF/spring-service.xml
-		,/WEB-INF/spring-data.xml
+			/WEB-INF/spring-service.xml
+		   ,/WEB-INF/spring-data.xml
 		</param-value>
 	</context-param>
 	
@@ -17,6 +20,12 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!-- Processes application requests -->
+	<!-- DeptController는 MultiActionController(여기에 줄 그어져 있는 건 앞으로는 사용되지 않을 것이라고 알려주는 거임)를 상속받고 있다 -->
+	<!-- jar와 jar 사이에도 의존관계가 있다  -->
+	<!-- DispatcherServlet이 없으면 classNotFoundException!!! -->
+	<!-- init-param안에는 spring-servlet.xml이 들어있다. 서블릿이 요청할때마다 잠깐 켜짐 . context-param과 비교해서 생각하기-->
+	<!-- 객체에대한 라이프사이클을 관리 받아야한다. 캐시(휘발성) - 그래서 기억 시키기위한 쿠키와 세션이 필요 -->
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -32,5 +41,4 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.sp4</url-pattern>
 	</servlet-mapping>
-
 </web-app>
