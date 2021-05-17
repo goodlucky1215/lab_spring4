@@ -18,3 +18,11 @@
       <constructor-arg index="2" type="int" value="1127"/>
    </bean>
 </beans>
+<!-- 
+S
+//관리를 못 받는다  라이프사이클을 내가 관리해야한다.
+prototype은  context.getbean(여기 아이디로 누군지 구분함)을 불러옴
+page 이동과 관계가 있다. ->유지가!
+redirect는 url, forward는 내용이 변하지 않음.
+
+-->

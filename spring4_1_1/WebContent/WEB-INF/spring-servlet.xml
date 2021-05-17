@@ -1,6 +1,49 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> <!--  ?xml => xml의 선언문  // -->
+<!-- beans => 클래스와 동급이다. root태그이다. // xmlns => namespace의 약자다 -->
+<!-- http://www.springframework.org/schema/beans => 유효성 검사 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	
+	<!-- 서블릿: 컨트롤 계층의 역할  -->
+	<!--  2가지 방법 -->
+	<!--  BeanNameUrlHandlerMapping은  name를 가져오고, 얘는 값 하나만을 가져온다 (딱 봐도 비효율적이라는거지!!)-->
+	<!--  SimpleUrlHandlerMapping은 id를 가져온다. 얘는 저렇게 prop를 여러가 갖다 쓸 수 있다. -->
+	<bean id="default-handler-mapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	<bean name="/di/hello.sp4" class="kosmo80.mvc.sp4.HelloController" />
+	
+	<bean id="emp-controller" class="kosmo80.mvc.sp4.EmpController">
+		<property name="methodNameResolver" ref="emp-resolver" />
+		<property name="empLogic" ref="emp-logic" />
+	</bean>
+	<bean id="url-mapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+			<!-- prop는 프로퍼타이즈이고, key와 value로 받는다. util에 있다. key는 유니크값(key="/di/getEmpList.sp4")이고
+			  그옆에 value(emp-controller)가 온다 -->
+			<!--  emp-controller는 id값이고 그 id값 옆에 class가 진짜 쓰는 클래스 위치-->
+			<!-- 확장자가 sp4면 스프링의 관리를 받는다. web.xml에 그렇게 해둿으니깐(*.sp4로) -->
+				<prop key="/di/getEmpList.sp4">emp-controller</prop>
+				<prop key="/di/empInsert.sp4">emp-controller</prop>
+				<prop key="/di/empUpdate.sp4">emp-controller</prop>
+				<prop key="/di/empDelete.sp4">emp-controller</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- HttpServlet이면 표준이다. DispacherServlet이면 스프링이다 -->
+	<!-- 메소드 오버라이딩은 건들 수 없는데 void면 유지를 어떻게 하지? request로 그래서 관리하게 되는 것임. -->
+	<bean id="emp-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/di/getEmpList.sp4">getEmpList</prop>
+				<prop key="/di/empInsert.sp4">empInsert</prop>
+				<prop key="/di/empUpdate.sp4">empUpdate</prop>
+				<prop key="/di/empDelete.sp4">empDelete</prop>
+			</props>
+		</property>
+	</bean>
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp"/>
+	</bean>
 </beans>

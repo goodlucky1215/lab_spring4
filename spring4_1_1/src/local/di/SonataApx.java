@@ -11,11 +11,11 @@ public class SonataApx {
 		Sonata myCar = null; //처음에는 null로 관리를 해야 모범 답안
 		myCar = (Sonata)context.getBean("myCar");
 		System.out.println(myCar.toString());
-		System.out.println("my의 현재 속도"+myCar.getSpeed());
+		System.out.println("my의 현재 속도"+myCar.getWheelNum());
 		Sonata yourCar = null;
 		yourCar = (Sonata)context.getBean("yourCar");
 		System.out.println(yourCar.toString());
-		System.out.println("you의 현재 속도"+yourCar.getSpeed());
+		System.out.println("you의 현재 속도"+yourCar.getWheelNum());
 		Sonata meCar = null;
 		//여기서부터 터짐 forward가  없으니깐!!
 		meCar = (Sonata)context.getBean("meCar");
