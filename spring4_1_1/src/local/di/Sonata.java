@@ -3,7 +3,7 @@ package local.di;
 //import org.springframework.context.annotation.Scope;
 
 //@Scope("singletone")
-public class Sonata {
+public class Sonata implements Carsound {
    private String carColor = null;
    private int wheelNum = 0;
    private int speed = 0;
@@ -31,12 +31,25 @@ public class Sonata {
       return speed;
    }
    public void setCarColor(String carColor) {
+	   System.out.println("차 색을 결정");
       this.carColor = carColor;
    }
    public void setWheelNum(int wheelNum) {
+	   System.out.println("차 번호를 결정");
       this.wheelNum = wheelNum;
    }
    public void setSpeed(int speed) {
+	   System.out.println("차 스피드ㄹ를 결정");
       this.speed = speed;
    }
+@Override
+public void sound1() {
+	System.out.println("부르르를르ㅡㅇ");
+	
+}
+@Override
+public void sound2() {
+	// TODO Auto-generated method stub
+	
+}
 }

@@ -12,9 +12,11 @@ public class SonataApx {
 		myCar = (Sonata)context.getBean("myCar");
 		System.out.println(myCar.toString());
 		System.out.println("my의 현재 속도"+myCar.getWheelNum());
+		myCar.sound1();
 		Sonata yourCar = null;
 		yourCar = (Sonata)context.getBean("yourCar");
 		System.out.println(yourCar.toString());
+		System.out.println("you의 현재 색"+yourCar.getCarColor());
 		System.out.println("you의 현재 속도"+yourCar.getWheelNum());
 		Sonata meCar = null;
 		//여기서부터 터짐 forward가  없으니깐!!
