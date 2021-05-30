@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
 
 public class EmpController extends MultiActionController {
 	Logger logger = Logger.getLogger(EmpController.class);
 	private EmpLogic empLogic = null;
 	//setter 객체 주입 코드
 	public void setEmpLogic(EmpLogic empLogic) {
+		logger.info("setEmpLogic  호출 성공");
 		this.empLogic = empLogic;
 	}
 	public ModelAndView getEmpList(HttpServletRequest req

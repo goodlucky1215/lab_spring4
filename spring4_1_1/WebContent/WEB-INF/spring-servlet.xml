@@ -29,6 +29,7 @@
 				<prop key="/di/empInsert.sp4">emp-controller</prop>
 				<prop key="/di/empUpdate.sp4">emp-controller</prop>
 				<prop key="/di/empDelete.sp4">emp-controller</prop>
+				<prop key="/di/empDelete11.sp4">emp-controller</prop>
 			</props>
 		</property>
 	</bean>
