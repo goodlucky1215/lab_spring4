@@ -1,4 +1,4 @@
-package local.di2;
+package local.di.anotation;
 
 import org.springframework.stereotype.Component;
 

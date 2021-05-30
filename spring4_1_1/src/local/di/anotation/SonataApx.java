@@ -1,4 +1,4 @@
-package local.di2;
+package local.di.anotation;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
