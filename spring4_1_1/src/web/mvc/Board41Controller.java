@@ -1,11 +1,16 @@
 package web.mvc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.util.HashMapBinder;
 
 public class Board41Controller extends MultiActionController {
 	/*
@@ -34,9 +39,13 @@ public class Board41Controller extends MultiActionController {
 	public ModelAndView getBoardList(HttpServletRequest req, HttpServletResponse res)
 	throws Exception {
 		logger.info("getBoardList 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> target = new HashMap();
+		hmb.bind(target);
+		boardLogic.getBoardList(target); //where bm_no=? and bm_title LIKE '%'||?||'%'
 		ModelAndView mav = new ModelAndView();
-		RequestDispatcher view = req.getRequestDispatcher("getBoardList.jsp");
-		view.forward(req, res);
+		//RequestDispatcher view = req.getRequestDispatcher("getBoardList.jsp");
+		//view.forward(req, res);
 		return mav;
 	}
 	//json으로 내보내준다. - @RestController : String, @Controller : void, ModelAndView, String
