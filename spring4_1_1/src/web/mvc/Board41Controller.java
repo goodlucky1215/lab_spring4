@@ -1,15 +1,21 @@
 package web.mvc;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.google.gson.Gson;
 import com.util.HashMapBinder;
 
 public class Board41Controller extends MultiActionController {
@@ -21,6 +27,7 @@ public class Board41Controller extends MultiActionController {
 	private Board41Logic boardLogic = null;
 	//setter메소드를 통하여 게으른 객체 주입
 	public void setBoardLogic(Board41Logic boardLogic) {
+		logger.info("setBoardLogic 호출 성공");
 		this.boardLogic = boardLogic;
 	}
 	//request로 유지 -> 이렇게 하면 스프링으로 하는거라고?!
@@ -38,18 +45,35 @@ public class Board41Controller extends MultiActionController {
 	//doGet안에 있는 것이니깐 너도 있어야 해줄거야.라고 말하는 것이다.
 	public ModelAndView getBoardList(HttpServletRequest req, HttpServletResponse res)
 	throws Exception {
-		logger.info("getBoardList 호출 성공");
-		HashMapBinder hmb = new HashMapBinder(req);
-		Map<String, Object> target = new HashMap();
-		hmb.bind(target);
-		boardLogic.getBoardList(target); //where bm_no=? and bm_title LIKE '%'||?||'%'
-		ModelAndView mav = new ModelAndView();
-		//RequestDispatcher view = req.getRequestDispatcher("getBoardList.jsp");
-		//view.forward(req, res);
-		return mav;
+	      logger.info("getBoardList 호출성공");
+	      HashMapBinder hmb = new HashMapBinder(req);
+	      Map<String,Object> target = new HashMap();
+	      hmb.bind(target);
+	      List<Map<String,Object>> boardList = null;
+	      boardList = boardLogic.getBoardList(target);
+	      logger.info("boardList : "+boardList);
+	      ModelAndView mav = new ModelAndView();
+	      mav.setViewName("board/getBoardList");//forward니깐 url은 그대로 있는데 jsp는 나온다니깐
+	      //톰캣이 요청은 유지되고 있습니다.라고 판단을 한다.
+	      mav.addObject("boardList", boardList);
+//	      RequestDispatcher view = req.getRequestDispatcher("getBoardList.jsp");
+//	      view.forward(req, res);
+	      return mav;
 	}
 	//json으로 내보내준다. - @RestController : String, @Controller : void, ModelAndView, String
-	public void jsonGetBoardList(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("jsonGetBoardList 호출 성공");
+	//@RestController 얘쓰면 req이런거 없이 가뿐하게 해결 됨.
+	public void jsonGetBoardList(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	    logger.info("getBoardList 호출성공");
+	    HashMapBinder hmb = new HashMapBinder(req);
+	    Map<String,Object> target = new HashMap();
+	    hmb.bind(target);
+	    List<Map<String,Object>> boardList = null;
+	    boardList = boardLogic.getBoardList(target);
+	    logger.info("boardList : "+boardList);
+		Gson g = new Gson();
+		String imsi = g.toJson(boardList);
+		res.setContentType("application/json;charset=utf-8");
+		PrintWriter out = res.getWriter();
+		out.print(imsi);
 	}
 }

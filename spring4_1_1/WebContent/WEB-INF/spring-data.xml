@@ -41,7 +41,12 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
-	<bean id="boardMDao" class="web.mvc.Board41MDao">
+	<bean id="board-mdao" class="web.mvc.Board41MDao">
+	<!-- name에 빨간줄이 뜨는 이유는 내가 Board41MDao.java파일에 setSqlSessionTemplate를 만들지 않아서 그렇다. -->
+	<!-- property는 setter객체주입이라서 필요하니깐! -->
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="board-sdao" class="web.mvc.Board41SDao">
 	<!-- name에 빨간줄이 뜨는 이유는 내가 Board41MDao.java파일에 setSqlSessionTemplate를 만들지 않아서 그렇다. -->
 	<!-- property는 setter객체주입이라서 필요하니깐! -->
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
