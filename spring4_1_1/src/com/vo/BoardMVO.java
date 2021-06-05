@@ -100,4 +100,14 @@ public class BoardMVO {
 	public void setBm_pw(String bm_pw) {
 		this.bm_pw = bm_pw;
 	}
+
+	public void setBsVO(BoardSVO bsVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getBsVO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

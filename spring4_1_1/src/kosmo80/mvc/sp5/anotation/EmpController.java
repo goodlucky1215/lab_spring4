@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,12 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class EmpController{	
 	Logger logger = Logger.getLogger(EmpController.class);
-	private EmpLogic empLogic = null;
-	//setter 객체 주입 코드
-	//public void setEmpLogic(EmpLogic empLogic) {
-	//	this.empLogic = empLogic;
-		
-	//}
+	
+	@Autowired
+	private EmpLogic1 empLogic = null;
+
 	@RequestMapping("/di/getEmpList.sp5")
 	public ModelAndView getEmpList(HttpServletRequest req
 			                     , HttpServletResponse res) {
@@ -32,12 +31,12 @@ public class EmpController{
 		<property name="suffix" value=".jsp"/>
 		/WEB-INF/views/getEmpList.jsp
 		*/
-		//List<Map<String,Object>> empList = new ArrayList<>();
+		List<Map<String,Object>> empList = new ArrayList<>();
 		//Map<String,Object> rmap = new HashMap<>();
 		//rmap.put("mem_name", "이순신장군");
 		//empList.add(rmap);
 		//NPE(널포인트익셉션) 안 일어남.
-		//empList = empLogic.getEmpList();
+		empList = empLogic.getEmpList();
 		//ModelAndView는 scope속성이 request이다.
 		//mav.addObject("empList", empList);
 		mav.setViewName("di/getEmpList");
