@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+      let count = 0;//var를 사용하지 않는다!!
+      myFnc();
+    
+      function myFnc(){
+        count++;
+        document.write("hello"+count,"<br>");
+      }
+      myFnc();
+      //익명 함수라서 호이스팅이 지원되지 않기 때문에 절차지향적인 자바스크립트는 에러가 나게 될 것이다. 
+      //theFnc(); 먼저 호출했기때문에 에러가 날 것이다.
+      //theFnc();
+      const theFnc = function(){
+        count++;
+        document.write("bye"+count,"<br>");
+        document.write(`bye ${count} <br>`);
+      }
+      theFnc();
+      theFnc();
+  </script>
+</body>
+</html>
