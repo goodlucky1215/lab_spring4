@@ -76,4 +76,20 @@ public class Board41Controller extends MultiActionController {
 		PrintWriter out = res.getWriter();
 		out.print(imsi);
 	}
+	public void boardInsert(HttpServletRequest req, HttpServletResponse res) throws IOException{
+		HashMapBinder hmb = new HashMapBinder(req); //bm_title=제목이야&bm_writer=지니  => 쿼리스트링을 담음.
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap);
+		//http://localhost:8000/board/boardInsert.sp4?bm_title=와우와우껌&bs_file=A.txt&bm_writer=지니&bm_email=test@hot.com&bm_content=내용이당&bm_pw=123
+		//사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
+		int result = 0;
+		result = boardLogic.boardInsert(pmap);
+		if(result==1) {
+			res.sendRedirect("./getBoardList.sp4");
+		}
+		else {
+			res.sendRedirect("./boardinsertFail.jsp");
+		}
+	
+	}
 }

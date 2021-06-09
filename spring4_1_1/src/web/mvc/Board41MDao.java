@@ -19,4 +19,14 @@ public class Board41MDao {
 		boardList = sqlSessionTemplate.selectList("getBoardList",pmap);
 		return boardList;
 	}
+	public int boardMInsert(Map<String, Object> pmap) {
+		logger.info("boardMInsert 출력 성공");
+		int result = -1;
+		pmap.put("bm_no",sqlSessionTemplate.selectOne("getBmNo"));
+		pmap.put("bm_group",sqlSessionTemplate.selectOne("getBmGroup"));
+		result = sqlSessionTemplate.insert("boardInsert",pmap);
+		logger.info("boardMInsert 출력 성공");
+		logger.info("boa"+pmap);
+		return result;
+	}
 }
