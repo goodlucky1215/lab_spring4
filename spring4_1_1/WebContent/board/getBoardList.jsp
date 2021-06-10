@@ -30,7 +30,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-	   						/*익명함수 function(){*/
+	   						/*익명함수 function()글번호는 채번,글*/
 		$(document).ready(function(){
 			/*오브젝트 $('#dg_board')  생성자 datagrid(*/
 		    $('#dg_board').datagrid({
