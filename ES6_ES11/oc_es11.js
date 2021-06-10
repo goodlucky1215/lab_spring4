@@ -15,7 +15,7 @@
   };
   {
     function print(worker){
-      console.log(worker.job && manager.job.manager && manager.job.name);
+      console.log(worker.job && worker.job.manager && worker.job.manager.name);
     }
     print(worker1);
     print(worker2);
@@ -24,15 +24,17 @@
     function print(worker){
       console.log(worker.job
                   ? worker.job.manager
-                    ?worker.job.manager.name
+                    ? worker.job.manager.name
                     :undefined
                   :undefined
                   );
+      //worker.job ? (worker.job.manager ? worker.job.manager.name :undefined) :undefined
     }
     print(worker1);
     print(worker2);
   }
-  {
+  {//추천
+   //?.은 ?.'앞’의 평가 대상이 undefined나 null이면 평가를 멈추고 undefined를 반환합니다
     function print(worker){
       console.log(worker.job?.manager?.name);
     }
