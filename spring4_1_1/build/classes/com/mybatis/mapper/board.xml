@@ -4,12 +4,17 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.BoardMapper">
 	<select id="getBoardList" parameterType="map" resultType="map">
-		select bm.bm_no, bm.bm_title, bm.bm_date, NVL(bs.bs_file,'첨부파일 없음')bs_file, bm.bm_hit
+		 SELECT bm.bm_no, bm.bm_title, bm.bm_date, NVL(bs.bs_file,'파일 없음') bs_file, bm.bm_hit
+		       ,bm.bm_group, bm.bm_pos, bm.bm_step, bm.bm_email, bm.bm_pw
+		       ,bm.bm_writer, bm.bm_content
     	from board_master2019 bm, board_sub2019 bs
 		where bm.bm_no = bs.bm_no(+)
 		<if test='cb_search!=null and cb_search.equals("bm_title")'>
 			AND bm.bm_title LIKE '%'||{tb_search}||'%'
 		</if>
+		<if test='bm_no > 0'>
+	  	   AND bm.bm_no = #{bm_no}
+		</if>	 
 		ORDER BY bm_group desc, bm_step asc
 	</select>
 	<select id="test" parameterType="map" resultType="string">
@@ -19,7 +24,7 @@
 	<select id="getBsseq" resultType="int">
 		SELECT NVL((SELECT /*+index_desc(board_sub2019 BOARD_SUB_PK)*/ bs_seq
 			FROM board_sub2019
-			WHERE rownum=1),0)+1 bm_no FROM dual
+			WHERE rownum=1),0)+1 bs_seq FROM dual
 	</select>
 	
 	<delete id="boardMDel" parameterType="map">
@@ -43,8 +48,8 @@
 	</select>
 	
 	<insert id="boardInsert" parameterType="map">
-		INSERT INTO board_master2019 (BM_NO,BM_TITLE,BM_WRITER,BM_GROUP, BM_EMAIL,BM_CONTENT,BM_PW,BM_DATE)
-		VALUES (#{bm_no}, #{bm_title}, #{bm_writer},#{bm_group},#{bm_email},#{bm_content},#{bm_pw}, SYSDATE)
+		INSERT INTO board_master2019 (BM_NO,BM_TITLE,BM_WRITER,BM_GROUP, BM_EMAIL,BM_CONTENT,BM_PW,BM_DATE,bm_pos,bm_step)
+		VALUES (#{bm_no}, #{bm_title}, #{bm_writer},#{bm_group},#{bm_email},#{bm_content},#{bm_pw}, SYSDATE,#{bm_pos},#{bm_step})
 	</insert>
 	
 	<update id="hitCount" parameterType="int">
@@ -62,6 +67,6 @@
 	
 	<insert id="boardFileInsert" parameterType="map">
 		INSERT INTO board_sub2019 (BM_NO,BS_SEQ,BS_FILE,BS_SIZE)
-		VALUES (#{bm_no}, #{bs_seq}, #{bs_file},50)
+		VALUES (#{bm_no}, #{bs_seq}, #{bs_file},#{bs_size})
 	</insert>
 </mapper>

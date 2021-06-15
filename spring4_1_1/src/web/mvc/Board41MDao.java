@@ -38,8 +38,18 @@ public class Board41MDao {
 		logger.info("boardMInsert 출력 성공");
 		logger.info("boa"+pmap);
 	}
+	public void hitCount(int bm_no) {
+		logger.info("hitCount 출력 성공");
+		sqlSessionTemplate.selectOne("hitCount",bm_no);
+	}
 	public int getBmGroup() {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		result = sqlSessionTemplate.selectOne("getBmGroup");
+		return result;
+	}
+	public int getBmNo() {
+		int result = 0;
+		result = sqlSessionTemplate.selectOne("getBmNo");
+		return result;
 	}
 }

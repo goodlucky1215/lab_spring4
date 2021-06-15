@@ -48,6 +48,7 @@ public class Board41Controller extends MultiActionController {
 	      logger.info("getBoardList 호출성공");
 	      HashMapBinder hmb = new HashMapBinder(req);
 	      Map<String,Object> target = new HashMap();
+	      target.put("gubun","");
 	      hmb.bind(target);
 	      List<Map<String,Object>> boardList = null;
 	      boardList = boardLogic.getBoardList(target);
@@ -56,6 +57,24 @@ public class Board41Controller extends MultiActionController {
 	      mav.setViewName("board/getBoardList");//forward니깐 url은 그대로 있는데 jsp는 나온다니깐
 	      //톰캣이 요청은 유지되고 있습니다.라고 판단을 한다.
 	      mav.addObject("boardList", boardList);
+//	      RequestDispatcher view = req.getRequestDispatcher("getBoardList.jsp");
+//	      view.forward(req, res);
+	      return mav;
+	}
+	public ModelAndView getBoardDetail(HttpServletRequest req, HttpServletResponse res)
+	throws Exception {
+	      logger.info("getBoardDetail 호출성공");
+	      HashMapBinder hmb = new HashMapBinder(req);
+	      Map<String,Object> target = new HashMap();
+	      hmb.bind(target);//bm_no 담음.
+	      target.put("gubun","detail");
+	      logger.info("bm_no : "+target.get("bm_no"));
+	      List<Map<String,Object>> boardDetail = null;
+	      boardDetail = boardLogic.getBoardList(target);
+	      ModelAndView mav = new ModelAndView();
+	      mav.setViewName("board/read");//forward니깐 url은 그대로 있는데 jsp는 나온다니깐
+	      //톰캣이 요청은 유지되고 있습니다.라고 판단을 한다.
+	      mav.addObject("boardDetail", boardDetail);
 //	      RequestDispatcher view = req.getRequestDispatcher("getBoardList.jsp");
 //	      view.forward(req, res);
 	      return mav;
@@ -79,7 +98,7 @@ public class Board41Controller extends MultiActionController {
 	public void boardInsert(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		HashMapBinder hmb = new HashMapBinder(req); //bm_title=제목이야&bm_writer=지니  => 쿼리스트링을 담음.
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
+		hmb.multiBind(pmap);
 		//http://localhost:8000/board/boardInsert.sp4?bm_title=와우와우껌&bs_file=A.txt&bm_writer=지니&bm_email=test@hot.com&bm_content=내용이당&bm_pw=123
 		//사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
 		int result = 0;

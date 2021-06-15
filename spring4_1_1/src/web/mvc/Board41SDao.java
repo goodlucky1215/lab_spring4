@@ -13,10 +13,9 @@ public class Board41SDao {
 	}
 	public int boardSInsert(Map<String, Object> pmap) {
 		logger.info("boardSInsert 출력 성공");
-		int fileResult = -1;
+		int fileResult = 0;
 		int bs_seq = 0;
 		//사이즈 임의로 0줌
-		bs_seq = sqlSessionTemplate.selectOne("getBsseq");
 		pmap.put("bs_seq",bs_seq);
 		fileResult = sqlSessionTemplate.insert("boardFileInsert",pmap);
 		
