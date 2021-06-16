@@ -111,7 +111,7 @@ else{//조회 결과가 있는데....
             <td><%=rmap.get("BM_NO") %></td>
             <td><a href="getBoardDetail.sp4?bm_no=<%=rmap.get("BM_NO")%>"><%=rmap.get("BM_TITLE") %></a></td>
             <td><%=rmap.get("BM_DATE") %></td>
-            <td><%=rmap.get("BS_FILE") %></td>
+            <td><a href="download.jsp?bs_file=<%=rmap.get("BS_FILE")%>"><%=rmap.get("BS_FILE") %></td>
             <td><%=rmap.get("BM_HIT") %></td>
         </tr>
 <%
