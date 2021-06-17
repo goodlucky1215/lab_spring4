@@ -111,4 +111,13 @@ public class Board41Controller extends MultiActionController {
 		}
 	
 	}
+	public ModelAndView updateForm(HttpServletRequest req, HttpServletResponse res) {
+		HashMapBinder hmb = new HashMapBinder(req); 
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/updateForm");
+		mav.addObject("target",pmap);
+		return mav;
+	}
 }
