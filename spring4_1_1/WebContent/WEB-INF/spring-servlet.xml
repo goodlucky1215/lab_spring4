@@ -30,6 +30,7 @@
          	<prop key="/board/boardInsert.sp4">boardInsert</prop>
             <prop key="/board/getBoardList.sp4">getBoardList</prop> <!-- 이 key에 대한 값이 emp-controller이다 -->
             <prop key="/board/jsonGetBoardList.sp4">jsonGetBoardList</prop> <!-- 이 key에 대한 값이 emp-controller이다 -->
+        	<prop key="/board/updateForm.sp4">updateForm</prop>
          </props>
       </property>
    </bean>
@@ -46,6 +47,7 @@
 	            <prop key="/board/boardInsert.sp4">board-controller</prop> <!-- 이 key에 대한 값이 emp-controller이다 -->
 	            <prop key="/board/getBoardList.sp4">board-controller</prop> <!-- 이 key에 대한 값이 emp-controller이다 -->
 	            <prop key="/board/jsonGetBoardList.sp4">board-controller</prop> <!-- 이 key에 대한 값이 emp-controller이다 -->
+				<prop key="/board/updateForm.sp4">board-controller</prop>
 				<prop key="/di/getEmpList.sp4">emp-controller</prop>
 				<prop key="/di/empInsert.sp4">emp-controller</prop>
 				<prop key="/di/empUpdate.sp4">emp-controller</prop>

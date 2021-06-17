@@ -8,7 +8,7 @@
 	boardDetail = (List<Map<String,Object>>)request.getAttribute("boardDetail");
 	int size = 0;
 	String bm_email 	= null;
-	String bm_file 		= null;
+	String bs_file 		= null;
 	String bm_title 	= null;
 	String bm_writer 	= null;
 	String bm_content 	= null;
@@ -20,15 +20,15 @@
 	if(boardDetail!=null){
 		size = boardDetail.size();
 		bm_email = boardDetail.get(0).get("BM_EMAIL").toString();
-		bm_file = boardDetail.get(0).get("BS_FILE").toString();
+		bs_file = boardDetail.get(0).get("BS_FILE").toString();
 		bm_title = boardDetail.get(0).get("BM_TITLE").toString();
 		bm_writer = boardDetail.get(0).get("BM_WRITER").toString();
 		bm_content = boardDetail.get(0).get("BM_CONTENT").toString();
-/* 		bm_pw = boardDetail.get(0).get("BM_PW").toString();
+ 		bm_pw = boardDetail.get(0).get("BM_PW").toString();
 		bm_no = boardDetail.get(0).get("BM_NO").toString();
 		bm_group = boardDetail.get(0).get("BM_GROUP").toString();
 		bm_pos = boardDetail.get(0).get("BM_POS").toString();
-		bm_step = boardDetail.get(0).get("BM_STEP").toString();		 */
+		bm_step = boardDetail.get(0).get("BM_STEP").toString();
 	}
 	out.print("size:"+size);
 %>       
@@ -46,6 +46,24 @@
 //댓글쓰기
 function repleForm(){
 	$("#dlg_boardAdd").dialog('open');
+}
+function insAction(){
+    console.log("입력액션 호출");
+    $('#board_ins').submit();
+}	
+function updateForm(){
+	$('#dlg_upd').dialog({
+		title:'글 수정',
+		width:700,
+		height:450,
+		closed: false,
+		cache: false,
+		href:'updateForm.sp4?bm_writer=<%=bm_writer%>&bs_file=<%=bs_file%>&bm_no=<%=bm_no%>&bm_content=<%=bm_content%>',
+		modal: true
+	});
+}
+function boardList(){
+	location.href="./getBoardList.sp4";
 }
 </script>
 </head>
@@ -86,7 +104,7 @@ function repleForm(){
 	form전송시 encType옵션이 추가되면 request객체로 사용자가 입력한 값을 꺼낼 수 없다.
 	MultipartRequest  => cos.jar
 	 -->	
-		<form id="f_boardAdd" method="get">
+		<form id="board_ins" method="post" enctype="multipart/form-data" action="boardInsert.sp4">  
 		<input type="hidden" name="bm_no" value="<%=bm_no%>">
 		<input type="hidden" name="bm_group" value="<%=bm_group%>">
 		<input type="hidden" name="bm_pos" value="<%=bm_pos%>">
@@ -128,11 +146,11 @@ function repleForm(){
 	</div>
 	<!-- 입력 화면 버튼 추가 -->
 	<div id="tbar_boardAdd" align="right">
-		<a href="javascript:addAction()" class="easyui-linkbutton" iconCls="icon-save">저장</a>
+		<a href="javascript:insAction()" class="easyui-linkbutton" iconCls="icon-save">저장</a>
 		<a href="javascript:$('#dlg_boardAdd').dialog('close')" 
 		   class="easyui-linkbutton" iconCls="icon-cancel">닫기</a>
 	</div>
-		<!-- 댓글쓰기  끝  -->	    
-	
+		<!-- 댓글쓰기  끝  -->	 
+	 <div id="dlg_upd" >
 </body>
 </html>
