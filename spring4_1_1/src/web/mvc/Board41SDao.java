@@ -21,4 +21,10 @@ public class Board41SDao {
 		
 		return fileResult;
 	}
+	public int boardSDelete(Map<String, Object> pmap) {
+		logger.info("boardMDelete호출 성공");
+		int result = 0;
+		result = sqlSessionTemplate.update("boardSDel",pmap);		
+		return result;
+	}
 }

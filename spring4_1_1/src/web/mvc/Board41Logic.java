@@ -1,5 +1,6 @@
 package web.mvc;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -61,6 +62,35 @@ public class Board41Logic {
 		}
 		boardMDao.boardMInsert(pmap);
 		result = 1;
+		return result;
+	}
+	public int boardUpdate(Map<String, Object> pmap) {
+		logger.info("boardUpdate 호출 성공");
+		int result = 0;
+		result = boardMDao.boardMUpdate(pmap);
+		return result;
+	}
+	public int boardDelete(Map<String, Object> pmap) {
+		logger.info("boardDelete 호출 성공");
+		int result = 0;
+		try {
+			String filePath = "";
+			String filename = pmap.get("bs_file").toString();
+			String fullName = filePath+filename;
+			//실제로 존재하는 파일 이름을 객체로 생성해주는 클래스
+			File file = new File(fullName);
+			if(file!=null) {
+				if(file.exists()) {
+					boolean isOk = file.delete();
+					logger.info(isOk);
+					pmap.put("bs_seq",1);
+					result = boardSDao.boardSDelete(pmap);
+				}
+			}			
+			result = boardMDao.boardMDelete(pmap);
+		}catch(Exception e) {
+			logger.info("Exception: "+e.toString());
+		}
 		return result;
 	}
 }

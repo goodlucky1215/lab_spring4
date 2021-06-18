@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>    
 <%
+	request.setCharacterEncoding("utf-8");
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
 	List<Map<String,Object>> boardDetail = null;
@@ -20,7 +21,9 @@
 	if(boardDetail!=null){
 		size = boardDetail.size();
 		bm_email = boardDetail.get(0).get("BM_EMAIL").toString();
-		bs_file = boardDetail.get(0).get("BS_FILE").toString();
+		if(boardDetail.get(0).containsKey("BS_FILE")){
+			bs_file = boardDetail.get(0).get("BS_FILE").toString();
+		}
 		bm_title = boardDetail.get(0).get("BM_TITLE").toString();
 		bm_writer = boardDetail.get(0).get("BM_WRITER").toString();
 		bm_content = boardDetail.get(0).get("BM_CONTENT").toString();
@@ -28,7 +31,9 @@
 		bm_no = boardDetail.get(0).get("BM_NO").toString();
 		bm_group = boardDetail.get(0).get("BM_GROUP").toString();
 		bm_pos = boardDetail.get(0).get("BM_POS").toString();
-		bm_step = boardDetail.get(0).get("BM_STEP").toString();
+		if(boardDetail.get(0).containsKey("BM_STEP")){
+			bm_step = boardDetail.get(0).get("BM_STEP").toString();
+		}
 	}
 	out.print("size:"+size);
 %>       
@@ -47,6 +52,33 @@
 function repleForm(){
 	$("#dlg_boardAdd").dialog('open');
 }
+function boardDelClose(){
+	$("#dlg_del").dialog('close');
+}
+function boardDelAction(){
+	let db_pw = <%=bm_pw%>;
+	let u_pw = $("#user_pw").textbox('getValue');
+	if(db_pw == u_pw){
+		$.messager.confirm('confirm','정말 삭제하겠습니까?',function(r){
+			if(r){
+				location.href="boardDelete.sp4?bm_no=<%=bm_no%>&bs_file=<%=bs_file%>";	
+			}
+		});
+	}else{
+		alert("비밀번호가 틀렸습니다!");
+		return;
+	}
+}
+function boardDelView(){
+	$('#dlg_del').dialog({
+		title:'글 삭제',
+		width:400,
+		height:200,
+		closed: false,
+		cache: false,
+		modal: true
+	});
+}
 function insAction(){
     console.log("입력액션 호출");
     $('#board_ins').submit();
@@ -58,7 +90,7 @@ function updateForm(){
 		height:450,
 		closed: false,
 		cache: false,
-		href:'updateForm.sp4?bm_writer=<%=bm_writer%>&bs_file=<%=bs_file%>&bm_no=<%=bm_no%>&bm_content=<%=bm_content%>',
+		href:'updateForm.jsp?bm_title=<%=bm_title%>&bm_writer=<%=bm_writer%>&bm_content=<%=bm_content%>&bm_no=<%=bm_no%>&bs_file=<%=bs_file%>&bm_email=<%=bm_email%>&bm_pw=<%=bm_pw%>',
 		modal: true
 	});
 }
@@ -97,7 +129,15 @@ function boardList(){
 	    <a href="javascript:boardDelView()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">삭제</a>
 	    <a href="javascript:boardList()" class="easyui-linkbutton" iconCls="icon-search" plain="true">목록</a>
 	</div>
-	
+	<!-- =====================글 삭제 화면=================================== -->
+	<div id="dlg_del" title="비번확인" class="easyui-dialog" style="width:600px;height:400px;padding:10px" data-options="closed:true">
+		<div style="margin-bottom:20px">
+			<input class="easyui-textbox" id="user_pw" name="user_pw" label="비번:" labelPosition="top" data-options="prompt:'비번확인'" />
+		</div>
+		<a href="javascript:boardDelAction()" class="easyui-linkbutton" iconCls="icon-ok" style="width:90px">확인</a>
+		<a href="javascript:boardDelClose()" class="easyui-linkbutton" iconCls="icon-cancel" style="width:90px">닫기</a>
+	</div>	
+	<!--================== [ 글 삭제 화면 끝] ====================================-->
 	<!--================== [[댓글쓰기 화면]] ==================-->
 	<div id="dlg_boardAdd" title="댓글쓰기" class="easyui-dialog" style="width:600px;height:400px;padding:10px" data-options="closed:'true',modal:'true',footer:'#tbar_boardAdd'">	
 	<!-- 
