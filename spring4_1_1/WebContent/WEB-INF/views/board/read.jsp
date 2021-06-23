@@ -97,6 +97,10 @@ function updateForm(){
 function boardList(){
 	location.href="./getBoardList.sp4";
 }
+function updAction(){
+    console.log("입력액션 호출");
+    $('#board_upd').submit();
+}	
 </script>
 </head>
 <body>

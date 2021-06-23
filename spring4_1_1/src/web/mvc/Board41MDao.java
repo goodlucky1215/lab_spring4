@@ -49,7 +49,7 @@ public class Board41MDao {
 	public int boardMUpdate(Map<String, Object> pmap) {
 		logger.info("boardMUpdate호출 성공");
 		int result = 0;
-		result = sqlSessionTemplate.update("boardMUpdate");		
+		result = sqlSessionTemplate.update("boardMUpdate",pmap);		
 		return result;
 	}
 	public int boardMDelete(Map<String, Object> pmap) {

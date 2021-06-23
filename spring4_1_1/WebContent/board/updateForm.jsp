@@ -24,10 +24,7 @@
 <script type="text/javascript" src="<%=path.toString() %>js/jquery.min.js"></script>
 <script type="text/javascript" src="<%=path.toString() %>js/jquery.easyui.min.js"></script> 
 <script type="text/javascript">
-function updAction(){
-    console.log("입력액션 호출");
-    $('#board_upd').submit();
-}	
+
 </script>
 </head>
 <body>
